@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Anmol's Portfolio</title>
+  <style>
+    /* Darkish background with moving gradient */
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      color: #f1f1f1;
+      background: linear-gradient(-45deg, #0f2027, #203a43, #2c5364, #1b2735);
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
+      line-height: 1.6;
+    }
+
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Hero Section */
+    .hero {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 0 20px;
+    }
+    .hero h1 {
+      font-size: 3.5rem;
+      margin-bottom: 10px;
+      color: #90e0ef;
+    }
+    .hero p {
+      font-size: 1.3rem;
+      margin-bottom: 20px;
+      color: #caf0f8;
+    }
+    .hero a {
+      display: inline-block;
+      background: #00b4d8;
+      color: #fff;
+      padding: 12px 25px;
+      font-weight: bold;
+      border-radius: 30px;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+    .hero a:hover {
+      background: #0077b6;
+    }
+
+    nav {
+      background
