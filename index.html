@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DeepSeek Style Chatbot</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #0f172a;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      color: white;
+    }
+    #chat-container {
+      width: 600px;
+      max-width: 95%;
+      background: #1e293b;
+      padding: 20px;
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 0 20px rgba(0,0,0,0.4);
+    }
+    #messages {
+      flex: 1;
+      overflow-y: auto;
+      border: 1px solid #334155;
+      padding: 15px;
+      margin-bottom: 10px;
+      border-radius: 8px;
+      background: #0f172a;
+      max-height: 400px;
+    }
+    .user { color: #38bdf8; margin: 5px 0; }
+    .bot { color: #22c55e; margin: 5px 0; }
+    #input-box {
+      display: flex;
+    }
+    input {
+      flex: 1;
+      padding: 10px;
+      border-radius: 8px;
+      border: none;
+    }
+    button {
+      margin-left: 8px;
+      padding: 10px 15px;
+      background: #3b82f6;
+      border: none;
+      border-radius: 8px;
+      color: white;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #2563eb;
+    }
+  </style>
+</head>
+<body>
+  <div id="chat-container">
+    <h2>🤖 DeepSeek-Style AI Chatbot</h2>
+    <div id="messages"></div>
+    <div id="input-box">
+      <input type="text" id="user-input" placeholder="Ask me anything...">
+      <button onclick="sendMessage()">Send</button>
+    </div>
+  </div>
+
+  <script>
+    async function sendMessage() {
+      let inputField = document.getElementById("user-input");
+      let userText = inputField.value.trim();
+      if (!userText) return;
+
+      let messages = document.getElementById("messages");
+      messages.innerHTML += `<p class='user'><b>You:</b> ${userText}</p>`;
+      inputField.value = "";
+
+      // Default reply while waiting
+      messages.innerHTML += `<p class='bot'><b>AI:</b> Thinking...</p>`;
+      messages.scrollTop = messages.scrollHeight;
+
+      try {
+        // Call AI API (replace with your real API key & endpoint)
+        let response = await fetch("https://api.openai.com/v1/chat/completions", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer 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"
+          },
+          body: JSON.stringify({
+            model: "gpt-3.5-turbo",
+            messages: [{ role: "user", content: userText }]
+          })
+        });
+
+        let data = await response.json();
+        let botReply = data.choices[0].message.content;
+
+        // Remove "Thinking..." and add actual reply
+        messages.lastChild.remove();
+        messages.innerHTML += `<p class='bot'><b>AI:</b> ${botReply}</p>`;
+      } catch (error) {
+        messages.lastChild.remove();
+        messages.innerHTML += `<p class='bot'><b>AI:</b> ⚠️ Error fetching response.</p>`;
+      }
+
+      messages.scrollTop = messages.scrollHeight;
+    }
+  </script>
+</body>
+</html>
